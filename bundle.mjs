@@ -2,7 +2,7 @@ import { build } from 'esbuild';
 import { esbuildDecorators } from '@anatine/esbuild-decorators';
 
 // ビルド対象のファイルをここに指定する。
-const entryPoints = ['src/api/main.ts'];
+const entryPoints = ['src/api/api-handler.ts'];
 
 await build({
   logLevel: 'info',
@@ -61,7 +61,7 @@ await build({
     // 出力ファイルのモジュール形式を ESM にしても、バンドルの一部に CommonJS の require が残ってしまう。
     // require が動作するようにバンドルの先頭にコードを挿入する。
     // cf. https://github.com/evanw/esbuild/issues/1921#issuecomment-1152887672
-    js: `import { createRequire } from 'module'; const require = createRequire(import.meta.url);`,
+    js: `console.info("initial"); import { createRequire } from 'module'; const require = createRequire(import.meta.url);`,
   },
 
   plugins: [
